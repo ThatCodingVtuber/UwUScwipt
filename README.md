@@ -151,14 +151,14 @@ pwease repweat
 
 	iffu mod uv x and 3
 		iffu is equal uv mod uv x and 5 UwU and 0
-			pwease cawl print wif *FizzBuzz*
+			pwease cawl pwint wif *FizzBuzz*
 		ewse
-			pwease cawl print wif *Fizz*
+			pwease cawl pwint wif *Fizz*
 		onegaishimasu
 	ewif mod uv x and 5
-		pwease cawl print wif *Buzz*
+		pwease cawl pwint wif *Buzz*
 	ewse
-		pwease cawl print wif x
+		pwease cawl pwint wif x
 	onegaishimasu
 
 	iffu is bigger uv x and 100 UwU
