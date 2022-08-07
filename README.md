@@ -96,13 +96,13 @@ These awe the opewators:
 
 `absowute` - Gives the absowute vawue uv a nwumber.
 
-`fwoor` - 
+`fwoor` - Gives fwoor uv a nwumber
 
-`wound` - 
+`wound` - Gives wound uv a nwumber
 
-`ceiwing` - 
+`ceiwing` - Gives ceiwing uv a nwumber
 
-`sqware woot` - 
+`sqware woot` - Gives sqware woot uv a nwumber
 
 `is bwiger` - Gives twue if a is bwiger than b, fawse othewwise. Gives nwull if no compawison can bwe pwefowmed.
 
