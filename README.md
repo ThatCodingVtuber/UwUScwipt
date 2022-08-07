@@ -14,7 +14,7 @@ OwO, what's this? An intwerpreted pwogramming wanguage for watashi and watashi n
 
 ## *:･ﾟ｡ Identifiers *ੈ✩‧₊˚
 
-Awl identifiers in the wangwage can have any numwber of letters, numbwers, letters, and spwecial chawactwers subject twoo the fowwowing westwictions:
+Awl identifiers in the wangwage can have any numwber of words, letters, numbwers, and spwecial chawactwers subject twoo the fowwowing westwictions:
 
 1) Awl words in an identifier name cant be keywords.
 
@@ -28,7 +28,7 @@ Twoo access a mwember fwunction or vawiable, u can use the `'s` symbol. For exam
 
 ### Bwooleans 
 
-Thwere awe two bwoolean vawues. Twue, and fwalse. These can bwe written wif keywords `twue` and `fwalse`.
+Thwere awe two bwoolean vawues. Twue, and fawse. These can bwe written wif keywords `twue` and `fawse`.
 
 ### Numbwers 
 
@@ -147,21 +147,21 @@ And for awways/maps, you can use.
 ```
 pwease set x twoo 0
 pwease repweat
-	pwease set x twoo sum uv x and 1 UwU
+	pwease set x twoo sum uv x and 1
 
 	iffu mod uv x and 3
-		iffu is equal uv mod uv x and 5 UwU and 0
-			pwease cawl pwint wif *FizzBuzz*
+		iffu is equal uv mod uv x and 5 and 0
+			pwease cawl pwint wif *FizzBuzz* UwU
 		ewse
-			pwease cawl pwint wif *Fizz*
+			pwease cawl pwint wif *Fizz* UwU
 		onegaishimasu
 	ewif mod uv x and 5
-		pwease cawl pwint wif *Buzz*
+		pwease cawl pwint wif *Buzz* UwU
 	ewse
-		pwease cawl pwint wif x
+		pwease cawl pwint wif x UwU
 	onegaishimasu
 
-	iffu is bigger uv x and 100 UwU
+	iffu is bigger uv x and 100
 		pwease bweak
 	onegaishimasu
 onegaishimasu
@@ -178,22 +178,22 @@ pwease repeat
 	onegaishimasu
 
 	pwease set y twoo 0
-	pwease set row twoo value uv matrix and x
+	pwease set row twoo index uv matrix and x
 	pwease repeat
 
-		iffu as smol as uv length uv row OwO and y UwU
+		iffu as smol as uv length uv row UwU and y
 			pwease bweak
 		onegaishimasu
 
-		iffu same uv 0 and value uv row and y UwU
-			pwease set wesult 
+		iffu same uv 0 and index uv row and y
+			pwease set wesult twoo 
 			pwease bweak bweak
 		onegaishimasu
 
-		pwease set y twoo sum uv y and 1 UwU
+		pwease set y twoo sum uv y and 1
 	onegaishimasu
 
-	pwease set x twoo sum uv x and 1 UwU
+	pwease set x twoo sum uv x and 1
 onegaishimasu
 ```
 
@@ -201,11 +201,11 @@ onegaishimasu
 
 `pwease set x twoo factowial uv 4 UwU`
 
-`pwease set x twoo sum uv 3 and 5 UwU`
+`pwease set x twoo sum uv 3 and 5`
 
-`pwease set x twoo lerp uv 3, 5, and 0.3 UwU`
+`pwease set x twoo lerp uv 3, 5, and 0.3`
 
-`pwease cawl main UwU`
+`pwease cawl main OwO`
 
 `pwease cawl main wif config UwU`
 
@@ -217,10 +217,16 @@ onegaishimasu
 
 ```
 pwease set factowial twoo fwunction n
-	iffu is bigger uv n and 1 UwU
+	iffu is bigger uv n and 1
 		pwease give pwoduct uv n and factowial uv diff uv n and 1 UwU
 	onegaishimasu
 	pwease give 1
+onegaishimasu
+```
+
+```
+pwease set addThree a, b, and c
+	pwease give sum uv a, b, and c
 onegaishimasu
 ```
 
@@ -255,10 +261,10 @@ pwease set Tori twoo cwassu
 	onegaishimasu
 onegaishimasu
 
-pwease set cat twoo Neko UwU
+pwease set cat twoo Neko OwO
 pwease cawl cat's action OwO
 pwease cawl pwint wif *the neko has*, cat's legs, and *legs*
-pwease set birb twoo Tori UwU
+pwease set birb twoo Tori OwO
 pwease cawl birb's action OwO
 pwease cawl pwint wif birb's legs
 ```
