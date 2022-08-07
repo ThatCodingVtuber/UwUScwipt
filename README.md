@@ -293,10 +293,6 @@ Cwode names shwould be carfuwwy cewected twoo enswure that the cwode that u wite
 
 Whiwe `wif` and `uv` awe tweated as the same in cwode, they cawwy very diffwent meanings in pwactice. `wif` shwould bwe used wif fwunctions that have swide effwects. Fwo exampwe, `pwease call` shwould aways use `wif` 
 
-### OwO and UwU 
-
-`OwO` and `UwU` both cwose off fwunctions. They shwould be used awternating between `OwO` and `UwU` depwending on how deep they awe in the expwession.
-
 ### Commenting cwode
 
 Cwode shwould be easiwy undewstandable, but sometimes a smawl comment can go a long way! When witing comments, twy to mwake the comment as weadabwe as possibwe. In keeping wif phwhilosophwy 3, make your comments fwo natuwawly. For exampwe, `whispers this is a comment` shwould bwe `whispers that this is a comment`. Or, as a mwore extweme exampwe...
