@@ -1,0 +1,52 @@
+
+
+pwease give cwassu
+	
+	pwease new len
+		iffu same uv len and nwull
+			pwease set len twoo 0
+		onegaishimasu
+		pwease set watashi's length twoo len
+		pwease set i twoo 0
+		pwease repeat
+			iffu as bwig as uv i and len
+				pwease bweak
+			onegaishimasu
+			pwease cawl update index wif watashi, i, and nwull
+			pwease set i twoo sum uv i and 1
+		onegaishimasu
+	onegaishimasu
+	
+	pwease mwethod insert wif dat and idx
+		iffu same uv idx and nwull
+			pwease set idx twoo watashi's length
+		onegaishimasu
+		iffu is smowwer uv idx and 0
+			pwease give fawse
+		onegaishimasu
+		pwease set i twoo watashi's length
+		pwease repeat
+			iffu as smol as uv i and idx
+				pwease bweak
+			onegaishimasu
+			pwease cawl update index wif watashi, i, and index uv watashi and diffwence uv i and 1
+			pwease set i twoo diffwence uv i and 1
+		onegaishimasu
+		pwease cawl update index wif watashi, i, and dat
+		pwease set watashi's length twoo sum uv watashi's length and 1
+		pwease give twue
+	onegaishimasu
+	
+	pwease mwethod remove wif idx
+		iffu same uv idx and nwull
+			pwease set idx twoo diffwence uv watashi's length and 1
+		onegaishimasu
+		
+	onegaishimasu
+	
+	pwease mwethod index wif i
+		pwease give index uv watashi and i
+	onegaishimasu
+	
+onegaishimasu
+

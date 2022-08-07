@@ -1,0 +1,25 @@
+
+
+pwease set count twoo 0
+pwease repeat
+	
+	pwease set count twoo sum uv count and 1 UwU
+	
+	iffu same uv wemainder uv count and 3 UwU and 0 UwU
+		iffu same uv wemainder uv count and 5 UwU and 0 UwU
+			pwease cawl pwint wif *FizzBuzz* UwU
+		ewse
+			pwease cawl pwint wif *Fizz* UwU
+		onegaishimasu
+	ewif same uv wemainder uv count and 5 UwU and 0 UwU
+		pwease cawl pwint wif *Buzz* UwU
+	ewse
+		pwease cawl pwint wif count UwU
+	onegaishimasu
+	
+	iffu as bwig as uv count and 100 UwU
+		pwease bweak
+	onegaishimasu
+	
+onegaishimasu
+

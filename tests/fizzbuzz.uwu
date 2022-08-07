@@ -1,0 +1,26 @@
+
+nuzzles against yo chest UwU
+*looks into yo eyes OwO*
+this pwogwam wites the fwirst 100 entwies uv fizzbuzz
+*snuggles even closer* teehee
+
+pwease set count twoo 0
+pwease repeat
+	pwease set count twoo sum uv count and 1
+
+	iffu same uv wemainder uv count and 3 and 0
+		iffu same uv wemainder uv count and 5 and 0
+			pwease cawl pwint wif *FizzBuzz* UwU
+		ewse
+			pwease cawl pwint wif *Fizz* UwU
+		onegaishimasu
+	ewif same uv wemainder uv count and 5 and 0
+		pwease cawl pwint wif *Buzz* UwU
+	ewse
+		pwease cawl pwint wif count UwU
+	onegaishimasu
+
+	iffu as bwig as uv count and 100
+		pwease bweak
+	onegaishimasu
+onegaishimasu
