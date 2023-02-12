@@ -8,6 +8,8 @@ from typing import Any, Dict, List, Optional, Set
 from pawser.Pawser import Tree, Node, NodeType, Pawser, Tokenizer
 from pawser.IStream import Filestream
 
+from secrets import randbelow
+
 class DataType(Enum):
     NWULL = 0
     BWOOLEAN = 1
@@ -366,6 +368,42 @@ class BUILTIN_SETINDEX(BuiltinNaryFwunction):
         dat = table.getPossessive(node, indexS, True)
         dat.update(value.taipu, value.value)
         return Data(DataType.NWULL)
+class BUILTIN_SUBSTR(BuiltinNaryFwunction):
+    def __init__(self) -> None:
+        super().__init__(3,3)
+    def evaluate(self, node: Node, args: List[Data]) -> Data:
+        string = args[0]
+        start = args[1]
+        end = args[2]
+        if string.taipu == DataType.NWULL or start.taipu != DataType.NUMBWER or end.taipu != DataType.NUMBWER:
+            return Data(DataType.NWULL)
+        sval = str(string)
+        si = int(start.value)
+        ei = int(end.value)
+        if 0 <= si < len(sval) and 0 <= ei < len(sval) and si < ei:
+            return Data(DataType.STWING, sval[si:ei])
+        return Data(DataType.NWULL)
+class BUILTIN_STRLEN(BuiltinNaryFwunction):
+    def __init__(self) -> None:
+        super().__init__(1, 1)
+    def evaluate(self, node: Node, args: List[Data]) -> Data:
+        sval = str(args[0])
+        return Data(DataType.NUMBWER, len(sval))
+class BUILTIN_RAND(BuiltinNumbwerFwunction):
+    def __init__(self) -> None:
+        super().__init__(0, 2)
+    def evaluate(self, node: Node, args: List[float]) -> Data:
+        if len(args) == 0:
+            RAND_MAX = 1<<32
+            return Data(DataType.NUMBWER, randbelow(RAND_MAX) / RAND_MAX)
+        elif len(args) == 1:
+            upper = args[0]
+            return Data(DataType.NUMBWER, randbelow(upper))
+        else: # len(args) == 2
+            lower = min(args[0], args[1])
+            upper = max(args[0], args[1])
+            return Data(DataType.NUMBWER, randbelow(upper - lower) + lower)
+
 
 class StackFrame:
     def __init__(self) -> None:
@@ -447,6 +485,11 @@ class Runner:
 
             self.globals.set("index", Data(DataType.BUILTIN_FWUNCTION, BUILTIN_INDEX()))
             self.globals.set("update index", Data(DataType.BUILTIN_FWUNCTION, BUILTIN_SETINDEX()))
+
+            self.globals.set("subby", Data(DataType.BUILTIN_FWUNCTION, BUILTIN_SUBSTR()))
+            self.globals.set("length", Data(DataType.BUILTIN_FWUNCTION, BUILTIN_STRLEN()))
+
+            self.globals.set("random", Data(DataType.BUILTIN_FWUNCTION, BUILTIN_RAND()))
         
         self.stack.append(self.globals)
 
