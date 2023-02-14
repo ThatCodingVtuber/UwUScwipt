@@ -38,10 +38,31 @@ pwease give cwassu
 	onegaishimasu
 	
 	pwease mwethod remove wif idx
-		iffu same uv idx and nwull
-			pwease set idx twoo diffwence uv watashi's length and 1
+		iffu same uv watashi's length and 0
+			pwease give nwull
 		onegaishimasu
-		
+
+		pwease set watashi's length twoo diffwence uv watashi's length and 1
+
+		iffu same uv idx and nwull
+			pwease set idx twoo watashi's length
+		onegaishimasu
+
+		pwease set rval twoo index uv watashi and idx
+
+		pwease repeat
+			iffu as bwig as uv idx and watashi's length
+				pwease bweak
+			onegaishimasu
+
+			pwease cawl update index wif watashi, idx, and index uv watashi and sum uv idx and 1
+
+			pwease set idx twoo sum uv idx and 1
+		onegaishimasu
+
+		pwease cawl update index wif watashi, watashi's length, and nwull
+
+		pwease give rval
 	onegaishimasu
 	
 	pwease mwethod index wif i

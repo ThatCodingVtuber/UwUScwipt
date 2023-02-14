@@ -63,7 +63,7 @@ class ClassInstance:
             sf = StackFrame()
             for i, var in enumerate(prototype.newConstructor.children[0].children):
                 sf.set(var.data, args[i] if i < len(args) else Data(DataType.NWULL))
-            sf.set("watashi", Data(DataType.SCOPE, self.members))
+            sf.set("watashi", Data(DataType.CWASS_INST, self))
             stack = prototype.stack + [sf]
             for node in prototype.newConstructor.children[1].children:
                 if node.type == NodeType.EXTENDS:
@@ -163,6 +163,7 @@ class Data:
         if self.taipu == DataType.BWOOLEAN:
             return "twue" if self.value else "fawse"
         if self.taipu == DataType.FWUNCTION:
+            F: FunctionDef = self.value
             return "fwunction " + toArglistStr(F.args)
         if self.taipu == DataType.MWETHOD:
             F: FunctionDef = self.value
@@ -179,6 +180,13 @@ class Data:
                 return str(d)
             c: ClassInstance = self.value
             return '{ ' + ', '.join([ f"{k}: {procVal(c.members[k])}" for k in c.members ]) + ' }'
+        if self.taipu == DataType.SCOPE:
+            def procVal(d: Data):
+                if d.taipu == DataType.CWASS_INST:
+                    return "cwassu"
+                return str(d)
+            s: dict = self.value
+            return '{ ' + ', '.join([ f"{k}: {procVal(s[k])}" for k in s ]) + ' }'
         return "BUILTIN"
     def __repr__(self) -> str:
         return self.__str__()
@@ -226,10 +234,10 @@ class BUILTIN_PWINT(BuiltinFwunction):
         print(' '.join([ str(a) for a in args ]))
         return Data(DataType.NWULL)
 class BUILTIN_INPUT(BuiltinFwunction):
-    def call(self, args: List[Data]) -> Data:
+    def call(self, node: Node, args: List[Data]) -> Data:
         return Data(DataType.STWING, input(' '.join([ str(a) for a in args ])))
 class BUILTIN_NUM_INPUT(BuiltinFwunction):
-    def call(self, args: List[Data]) -> Data:
+    def call(self, node: Node, args: List[Data]) -> Data:
         n = input(' '.join([ str(a) for a in args ]))
         try:
             return Data(DataType.NUMBWER, float(n))
@@ -238,10 +246,10 @@ class BUILTIN_NUM_INPUT(BuiltinFwunction):
 class BUILTIN_JOIN(BuiltinNaryFwunction):
     def __init__(self) -> None:
         super().__init__(1)
-    def call(self, args: List[Data]) -> Data:
+    def call(self, node: Node, args: List[Data]) -> Data:
         return Data(DataType.STWING, ''.join([ str(a) for a in args ]))
 class BUILTIN_STWING(BuiltinBinawyUnawyFwunction):
-    def call(self, args: List[Data]) -> Data:
+    def call(self, node: Node, args: List[Data]) -> Data:
         return Data(DataType.STWING, str(args[0]))
 class BUILTIN_NWUMBER(BuiltinBinawyUnawyFwunction):
     def call(self, node: Node, args: List[Data]) -> Data:
@@ -345,6 +353,14 @@ class BUILTIN_NOR(BuiltinBinawyFwunction):
         a = not (args[0].taipu == DataType.NWULL or (args[0].taipu == DataType.BWOOLEAN and not args[0].value))
         b = not (args[1].taipu == DataType.NWULL or (args[1].taipu == DataType.BWOOLEAN and not args[1].value))
         return Data(DataType.BWOOLEAN, not (a or b))
+class BUILTIN_ANY(BuiltinNaryFwunction):
+    def evaluate(self, node: Node, args: List[Data]) -> Data:
+        bwools = [ not (a.taipu == DataType.NWULL or (a.taipu == DataType.BWOOLEAN and not a.value)) for a in args ]
+        return Data(DataType.BWOOLEAN, any(bwools))
+class BUILTIN_ALL(BuiltinNaryFwunction):
+    def evaluate(self, node: Node, args: List[Data]) -> Data:
+        bwools = [ not (a.taipu == DataType.NWULL or (a.taipu == DataType.BWOOLEAN and not a.value)) for a in args ]
+        return Data(DataType.BWOOLEAN, all(bwools))
 class BUILTIN_INDEX(BuiltinNaryFwunction):
     def __init__(self) -> None:
         super().__init__(2, 2)
@@ -353,7 +369,7 @@ class BUILTIN_INDEX(BuiltinNaryFwunction):
         index = args[1]
         if table.taipu == DataType.NWULL or index.taipu == DataType.NWULL:
             return Data(DataType.NWULL)
-        indexS = str(index.value)
+        indexS = str(index)
         return table.getPossessive(node, indexS)
 class BUILTIN_SETINDEX(BuiltinNaryFwunction):
     def __init__(self) -> None:
@@ -364,23 +380,30 @@ class BUILTIN_SETINDEX(BuiltinNaryFwunction):
         value = args[2]
         if table.taipu == DataType.NWULL or index.taipu == DataType.NWULL:
             return Data(DataType.NWULL)
-        indexS = str(index.value)
+        indexS = str(index)
         dat = table.getPossessive(node, indexS, True)
         dat.update(value.taipu, value.value)
         return Data(DataType.NWULL)
 class BUILTIN_SUBSTR(BuiltinNaryFwunction):
     def __init__(self) -> None:
-        super().__init__(3,3)
+        super().__init__(2,3)
     def evaluate(self, node: Node, args: List[Data]) -> Data:
-        string = args[0]
-        start = args[1]
-        end = args[2]
-        if string.taipu == DataType.NWULL or start.taipu != DataType.NUMBWER or end.taipu != DataType.NUMBWER:
-            return Data(DataType.NWULL)
+        if len(args) == 3:
+            string = args[0]
+            start = args[1]
+            end = args[2]
+            if string.taipu == DataType.NWULL or start.taipu != DataType.NUMBWER or end.taipu != DataType.NUMBWER:
+                return Data(DataType.NWULL)
+        else:
+            string = args[0]
+            start = args[1]
+            if string.taipu == DataType.NWULL or start.taipu != DataType.NUMBWER:
+                return Data(DataType.NWULL)
+            end = Data(DataType.NUMBWER, start.value + 1)
         sval = str(string)
         si = int(start.value)
         ei = int(end.value)
-        if 0 <= si < len(sval) and 0 <= ei < len(sval) and si < ei:
+        if 0 <= si <= len(sval) and 0 <= ei <= len(sval) and si <= ei:
             return Data(DataType.STWING, sval[si:ei])
         return Data(DataType.NWULL)
 class BUILTIN_STRLEN(BuiltinNaryFwunction):
@@ -398,10 +421,10 @@ class BUILTIN_RAND(BuiltinNumbwerFwunction):
             return Data(DataType.NUMBWER, randbelow(RAND_MAX) / RAND_MAX)
         elif len(args) == 1:
             upper = args[0]
-            return Data(DataType.NUMBWER, randbelow(upper))
+            return Data(DataType.NUMBWER, randbelow(int(upper)))
         else: # len(args) == 2
-            lower = min(args[0], args[1])
-            upper = max(args[0], args[1])
+            lower = int(min(args[0], args[1]))
+            upper = int(max(args[0], args[1]))
             return Data(DataType.NUMBWER, randbelow(upper - lower) + lower)
 
 
@@ -482,6 +505,8 @@ class Runner:
             self.globals.set("both", Data(DataType.BUILTIN_FWUNCTION, BUILTIN_AND()))
             self.globals.set("neither", Data(DataType.BUILTIN_FWUNCTION, BUILTIN_NOR()))
             self.globals.set("either", Data(DataType.BUILTIN_FWUNCTION, BUILTIN_OR()))
+            self.globals.set("any", Data(DataType.BUILTIN_FWUNCTION, BUILTIN_ANY()))
+            self.globals.set("awl", Data(DataType.BUILTIN_FWUNCTION, BUILTIN_ALL()))
 
             self.globals.set("index", Data(DataType.BUILTIN_FWUNCTION, BUILTIN_INDEX()))
             self.globals.set("update index", Data(DataType.BUILTIN_FWUNCTION, BUILTIN_SETINDEX()))
@@ -540,15 +565,17 @@ class Runner:
                     frame = StackFrame()
                     for i, var in enumerate(fdef.args):
                         frame.set(var, exprs[i] if i < len(exprs) else Data(DataType.NWULL))
-                    frame.set("watashi", Data(DataType.SCOPE, parent.value.members))
+                    frame.set("watashi", Data(DataType.CWASS_INST, parent.value))
                     try:
                         return self.executeNode(fdef.node, stack=fdef.stack + [frame])
                     except RuntimeException as re:
                         raise RuntimeException(re.node, re.err, re.returnStack + [expr])
+                else:
+                    raise RuntimeException(node, f"Cannot cawl vawiable uv taipu {data.taipu}")
             else:
                 return data
         if expr.type == NodeType.ARGLIST:
-            return Data(DataType.FWUNCTION, FunctionDef([a.data for a in node.children[0].children], self.stack[:], node.children[1]))
+            return Data(DataType.FWUNCTION, FunctionDef([a.data for a in node.children[0].children], stack[:], node.children[1]))
         if expr.type == NodeType.CLASSDEF:
             return Data.buildClassDef(expr, self)
 

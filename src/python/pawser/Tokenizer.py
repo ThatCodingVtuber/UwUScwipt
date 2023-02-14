@@ -150,7 +150,7 @@ class Tokenizer:
             identifierList = []
             kw = ''
             for i,c in enumerate(txt + ' '):
-                if c in string.whitespace:
+                if c in string.whitespace or c in "',*":
                     if kw == 'whispers':
                         if len(identifierList) > 0:
                             self.tokenQueue.append(Token(TokenType.IDENTIFIER, ' '.join(identifierList)))
@@ -179,12 +179,11 @@ class Tokenizer:
                     elif len(kw) > 0:
                         identifierList.append(kw)
                         kw = ''
-                elif c in "',*":
-                    if len(kw) > 0:
-                        identifierList.append(kw)
-                    if len(identifierList) > 0:
-                        self.tokenQueue.append(Token(TokenType.IDENTIFIER, ' '.join(identifierList)))
-                    return txt[i:]
+                    
+                    if c not in string.whitespace:
+                        if len(identifierList) > 0:
+                            self.tokenQueue.append(Token(TokenType.IDENTIFIER, ' '.join(identifierList)))
+                        return txt[i:]
                 else:
                     kw += c
             if len(kw) > 0:
